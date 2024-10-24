@@ -1,0 +1,32 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight (UTC)
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch all history so we can merge
+
+    - name: Set up Git
+      run: |
+        git config --global user.name 'liuisaac'
+        git config --global user.email 'liuisaac05@gmail.com'
+
+    - name: Add upstream repository
+      run: |
+        git remote add upstream https://github.com/liuisaac/Mecha-Mayhem-Frontend-2025.git
+        git fetch upstream
+
+    - name: Merge upstream
+      run: |
+        git checkout main  # Change this to your default branch if different
+        git merge upstream/main  # Merge changes from upstream
+        git push origin main  # Push changes to your fork
