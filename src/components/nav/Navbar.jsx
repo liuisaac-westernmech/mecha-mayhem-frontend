@@ -101,6 +101,7 @@ const HexNut = ({ currentRoute }) => {
 const Navbar = () => {
     const whitelist = ["/streams/matches", "/streams/vods"];
     const location = usePathname();
+    
     const [active, setActive] = useState(String(location.pathname));
     const [menu, setMenu] = useState(false);
 
